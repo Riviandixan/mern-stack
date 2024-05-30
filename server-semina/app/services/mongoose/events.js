@@ -22,7 +22,7 @@ const getAllEvents = async (req) => {
     category,
     talent
   } = req.query;
-  let condition = {};
+  let condition = { organizer: req.user.organizer };
 
   if (keyword) {
     condition = {
@@ -109,6 +109,7 @@ const createEvents = async (req) => {
     image,
     category,
     talent,
+    organizer: req.user.organizer
   });
 
   return result;
@@ -120,7 +121,8 @@ const getOneEvents = async (req) => {
   } = req.params;
 
   const result = await Events.findOne({
-      _id: id
+      _id: id,
+      organizer: req.user.organizer
     })
     .populate({
       path: 'image',
@@ -171,6 +173,7 @@ const updateEvents = async (req) => {
   // cari Events dengan field name dan id selain dari yang dikirim dari params
   const check = await Events.findOne({
     title,
+    organizer: req.user.organizer,
     _id: {
       $ne: id
     },
@@ -201,6 +204,7 @@ const updateEvents = async (req) => {
     image,
     category,
     talent,
+    organizer: req.user.organizer
   }, {
     new: true,
     runValidators: true
@@ -216,6 +220,7 @@ const deleteEvents = async (req) => {
 
   const result = await Events.findOneAndDelete({
     _id: id,
+    organizer: req.user.organizer
   });
 
   if (!result)

@@ -15,7 +15,7 @@ const getAllTalents = async (req) => {
     keyword
   } = req.query;
 
-  let condition = {};
+  let condition = { organizer: req.user.organizer };
 
   if (keyword) {
     condition = {
@@ -49,7 +49,8 @@ const createTalents = async (req) => {
 
   // cari talents dengan field name
   const check = await Talents.findOne({
-    name
+    name,
+    organizer: req.user.organizer
   });
 
   // apa bila check true / data talents sudah ada maka kita tampilkan error bad request dengan message pembicara duplikat
@@ -58,7 +59,8 @@ const createTalents = async (req) => {
   const result = await Talents.create({
     name,
     image,
-    role
+    role,
+    organizer: req.user.organizer
   });
 
   return result;
@@ -70,7 +72,8 @@ const getOneTalents = async (req) => {
   } = req.params;
 
   const result = await Talents.findOne({
-      _id: id
+      _id: id,
+      organizer: req.user.organizer
     })
     .populate({
       path: 'image',
@@ -100,6 +103,7 @@ const updateTalents = async (req) => {
   // cari talents dengan field name dan id selain dari yang dikirim dari params
   const check = await Talents.findOne({
     name,
+    organizer: req.user.organizer,
     _id: {
       $ne: id
     },
@@ -113,7 +117,8 @@ const updateTalents = async (req) => {
   }, {
     name,
     image,
-    role
+    role,
+    organizer: req.user.organizer
   }, {
     new: true,
     runValidators: true
@@ -133,6 +138,7 @@ const deleteTalents = async (req) => {
 
   const result = await Talents.findOneAndDelete({
     _id: id,
+    organizer: req.user.organizer
   });
 
   if (!result)

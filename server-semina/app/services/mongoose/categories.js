@@ -6,7 +6,6 @@ const {
 const BadRequest = require('../../error/bad-request');
 
 const getAllCategories = async (req) => {
-  console.log(req.user);
   const result = await Categories.find({
     organizer: req.user.organizer
   });
@@ -20,7 +19,8 @@ const createCategories = async (req) => {
   } = req.body;
 
   const check = await Categories.findOne({
-    name
+    name,
+    organizer: req.user.organizer
   });
 
   if (check) throw new BadRequest('Category already exists');

@@ -6,6 +6,7 @@ const {
 const {
   StatusCodes
 } = require('http-status-codes');
+const BadRequest = require('../../error/bad-request');
 
 const createOrganizer = async (req) => {
   const {
@@ -20,6 +21,12 @@ const createOrganizer = async (req) => {
   if (password !== confirmPassword) {
     throw new BadRequestError('Password dan confirmation password tidak cocok');
   }
+
+  const check = await Organizers.findOne({
+    organizer
+  });
+
+  if (check) throw new BadRequest('Organizer already exists');
 
   const result = await Organizers.create({
     organizer
@@ -51,22 +58,31 @@ const createUsers = async (req, res) => {
     throw new BadRequestError('Password dan confirmation password tidak cocok');
   }
 
+  const check = await Users.findOne({
+    email
+  });
+
+  if (check) throw new BadRequest('User already exists');
+
   const result = await Users.create({
     name,
     password,
     role,
     email,
-    organizer: req.user.organizer
+    organizer: req.user.organizer,
   });
 
-  res.status(StatusCodes.CREATED).json({
-    data: result
-  });
+  return result;
+}
+
+const getAllUsers = async (req) => {
+  const result = await Users.find();
 
   return result;
 }
 
 module.exports = {
   createOrganizer,
-  createUsers
+  createUsers,
+  getAllUsers
 };
