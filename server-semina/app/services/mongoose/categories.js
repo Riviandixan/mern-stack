@@ -114,7 +114,7 @@ const checkingCategories = async (id) => {
   if (!result) throw new NotFoundError(`Tidak ada Kategori dengan id :  ${id}`);
 
   return result;
-};x
+};
 
 module.exports = {
   getAllCategories,
