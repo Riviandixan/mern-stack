@@ -2,7 +2,7 @@
 const Talents = require('../../api/v1/talents/model');
 const {
   checkingImage
-} = require('./image');
+} = require('./images');
 
 // import custom error not found dan bad request
 const {

@@ -2,7 +2,7 @@
 const Events = require('../../api/v1/events/model');
 const {
   checkingImage
-} = require('./image');
+} = require('./images');
 const {
   checkingCategories
 } = require('./categories');

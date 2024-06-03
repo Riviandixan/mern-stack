@@ -1,7 +1,7 @@
 // import services images
 const {
   createImages
-} = require('../../../services/mongoose/image');
+} = require('../../../services/mongoose/images');
 
 const {
   StatusCodes

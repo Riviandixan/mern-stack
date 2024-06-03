@@ -13,6 +13,8 @@ const eventsRouter = require('./app/api/v1/events/router');
 const organizersRouter = require('./app/api/v1/organizers/router');
 const ordersRouter = require('./app/api/v1/orders/router');
 const authCMSRouter = require('./app/api/v1/auth/router');
+const participantsRouter = require('./app/api/v1/participants/router');
+const paymentsRouter = require('./app/api/v1/payments/router');
 
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handler-error');
@@ -40,6 +42,8 @@ app.use(`/${v1}`, eventsRouter);
 app.use(`/${v1}`, organizersRouter);
 app.use(`/${v1}`, ordersRouter);
 app.use(`/${v1}`, authCMSRouter);
+app.use(`/${v1}`, participantsRouter);
+app.use(`/${v1}`, paymentsRouter);
 
 
 app.use(notFoundMiddleware);
