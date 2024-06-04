@@ -35,6 +35,9 @@ const participantSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        otpExpired: {
+            type: Date,
+        }
     },
     { timestamps: true }
 );

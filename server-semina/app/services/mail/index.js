@@ -4,12 +4,11 @@ const Mustache = require('mustache');
 const fs = require('fs');
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    host: 'sandbox.smtp.mailtrap.io',
+    port: 2525,
     auth: {
-        user: gmail,
-        pass: password
+        user: "5466f48c5b4b45",
+        pass: "91538add74e8be"
     },
 });
 
@@ -18,15 +17,16 @@ const otpMail = async (email, data) => {
         let template = fs.readFileSync('app/views/email/otp.html', 'utf8');
 
         let message = {
-            from: gmail,
+            from: "noreply@yourdomain.com",
             to: email,
-            subject: 'OTP for registation is : ',
+            subject: 'OTP for registation',
             html: Mustache.render(template, data)
         };
 
         return await transporter.sendMail(message);
     } catch (ex) {
-        console.log(ex);
+        console.error('Error sending OTP email:', ex);
+        throw new Error('Failed to send OTP email');
     }
 }
 

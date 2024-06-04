@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const orderDetailSchema = new mongoose.Schema({ 
-    ticketCategorires: {
+    ticketCategories: {
         type: {
             type: String,
             required: [true, 'Tipe ticket harus diisi'],

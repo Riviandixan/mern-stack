@@ -29,7 +29,7 @@ const find = async (req, res, next) => {
     try {
         const result = await getOnePayments(req);
 
-        res.status(StatusCodes).json({
+        res.status(StatusCodes.OK).json({
             data: result,
         });
     } catch (err) {
@@ -41,7 +41,7 @@ const update = async (req, res, next) => {
     try {
         const result = await updatePayments(req);
 
-        res.status(StatusCodes).json({
+        res.status(StatusCodes.OK).json({
             data: result
         });
     } catch (err) {

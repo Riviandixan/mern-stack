@@ -12,8 +12,10 @@ const {
 
 const { otpMail } = require('../mail')
 
-const signupParticipant = async (data) => {
+const signupParticipant = async (req) => {
     const { firstName, lastName, email, password, role } = req.body;
+
+    const otpExpired = Date.now() + 300000;
 
     // jika email dan status tidak aktif
     let result = await Participant.findOne({
@@ -28,6 +30,7 @@ const signupParticipant = async (data) => {
         result.email = email;
         result.password = password;
         result.otp = Math.floor(Math.random() * 9999);
+        result.otpExpired = otpExpired;
         await result.save();
     } else {
         result = await Participant.create({
@@ -37,6 +40,7 @@ const signupParticipant = async (data) => {
             password,
             role,
             otp: Math.floor(Math.random() * 9999),
+            otpExpired
         });
     }
 
@@ -57,6 +61,8 @@ const activateParticipant = async (req) => {
     if (!check) throw new NotFoundError('Participant belum terdaftar');
 
     if (check && check.otp !== otp) throw new BadRequestError('Kode otp salah');
+    
+    if (Date.now() > check.otpExpired) throw new BadRequestError('Kode otp telah kedaluwarsa');
 
     const result = await Participant.findByIdAndUpdate(
         check._id,
@@ -119,7 +125,7 @@ const getOneEvent = async (req) => {
     .populate({ path: 'talent', populate: 'image' })
     .populate('image');
 
-    if (!result) throw new NotFoundError(`Tidak ada acara dengan id : , ${id}`);
+    if (!result) throw new NotFoundError(`Tidak ada acara dengan id : ${id}`);
 
     return result;
 }

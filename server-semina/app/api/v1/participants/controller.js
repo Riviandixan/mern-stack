@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 
 const {
-    signupParcitipant,
+    signupParticipant,
     signinParticipant,
     activateParticipant,
     getAllEvents,
@@ -13,7 +13,7 @@ const {
 
 const signup = async (req, res, next) => {
     try {
-        const result = await signupParcitipant(req);
+        const result = await signupParticipant(req);
 
         res.status(StatusCodes.CREATED).json({
             data: result,

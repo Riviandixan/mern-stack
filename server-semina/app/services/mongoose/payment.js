@@ -2,7 +2,7 @@ const Payments = require('../../api/v1/payments/model');
 const { checkingImage } = require('./images');
 const { NotFoundError, BadRequestError } = require('../../error');
 
-const getAllPayments = async () => {
+const getAllPayments = async (req) => {
     let condition = { organizer: req.user.organizer }; 
 
     const result = await Payments.find(condition)

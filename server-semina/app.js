@@ -19,7 +19,7 @@ const paymentsRouter = require('./app/api/v1/payments/router');
 const notFoundMiddleware = require('./app/middlewares/not-found');
 const handleErrorMiddleware = require('./app/middlewares/handler-error');
 
-const v1 = 'api/v1/cms';
+const v1 = 'api/v1';
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -35,15 +35,15 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use(`/${v1}`, categoriesRouter);
-app.use(`/${v1}`, imagesRouter);
-app.use(`/${v1}`, talentsRouter);
-app.use(`/${v1}`, eventsRouter);
-app.use(`/${v1}`, organizersRouter);
-app.use(`/${v1}`, ordersRouter);
-app.use(`/${v1}`, authCMSRouter);
+app.use(`/${v1}/cms`, categoriesRouter);
+app.use(`/${v1}/cms`, imagesRouter);
+app.use(`/${v1}/cms`, talentsRouter);
+app.use(`/${v1}/cms`, eventsRouter);
+app.use(`/${v1}/cms`, organizersRouter);
+app.use(`/${v1}/cms`, ordersRouter);
+app.use(`/${v1}/cms`, authCMSRouter);
+app.use(`/${v1}/cms`, paymentsRouter);
 app.use(`/${v1}`, participantsRouter);
-app.use(`/${v1}`, paymentsRouter);
 
 
 app.use(notFoundMiddleware);
